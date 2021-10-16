@@ -11,9 +11,12 @@ public class Fibonacci20 {
     public static void main(String[] args) {
         int[] fibonacciNumbers = fibonacciNumbers();
 
-        System.out.println(Arrays.toString(fibonacciNumbers));
+        // System.out.println(Arrays.toString(fibonacciNumbers));
+        for (int num : fibonacciNumbers) {
+            System.out.print(num);
+        }
     }
-
+    // <11235813213455891442333776109871597258441816765> but was: <[11235813213455891442333776109871597258441816765]>]
     public static int[] fibonacciNumbers() {
         int[] array = new int[20];
         array[0] = 1;
