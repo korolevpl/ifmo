@@ -9,6 +9,12 @@ public class ClosestToTen {
         float m = 8.5f;
         float n = 11.45f;
 
+        // float m = 23.6f;
+        // float n = 5.9f;
+
+        // float m = 8.5f;
+        // float n = 12.0f;
+
         float closestToTen = closestToTen(m, n);
 
         System.out.println(closestToTen);
@@ -16,10 +22,24 @@ public class ClosestToTen {
 
     public static float closestToTen(float m, float n) {
         final int ten = 10;
-        if (ten - m > ten - n) {
-            return n;
+        float m2;
+        float n2;
+
+        if (ten - m < 0) {
+            m2 = m - ten;
         } else {
+            m2 = ten - m;
+        }
+
+        if (ten - n < 0) {
+            n2 = n - ten;
+        } else {
+            n2 = ten - n;
+        }
+
+        if (m2 < n2) {
             return m;
         }
+        return n;
     }
 }
