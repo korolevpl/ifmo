@@ -34,9 +34,11 @@ public class SquareEquation {
             result = new double[2];
             result[0] = (-b - Math.sqrt(discriminant)) / (2 * a);
             result[1] = (-b + Math.sqrt(discriminant)) / (2 * a);
+            return result;
         } else if (discriminant == 0) {
             result[0] = (-b + Math.sqrt(discriminant)) / (2 * a);
+            return result;
         }
-        return result;
+        return null;
     }
 }
