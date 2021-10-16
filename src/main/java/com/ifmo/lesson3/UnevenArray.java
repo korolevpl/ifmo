@@ -11,7 +11,11 @@ public class UnevenArray<unevenArray> {
     public static void main(String[] args) {
         int[] unevenArray = unevenArray();
 
-        System.out.println(Arrays.toString(unevenArray));
+        int[] resultArray = new int[unevenArray.length * 2];
+        // Можно также использовать System.arraycopy()
+        for(int i=0; i < unevenArray.length; i++) {
+            resultArray[i] = unevenArray[i];
+        }
 
         int[] reverseArray = unevenArray;
         for (int i=0, j = reverseArray.length -1; i<=j; i++, j--) {
@@ -19,7 +23,12 @@ public class UnevenArray<unevenArray> {
             reverseArray[i] = reverseArray[j];
             reverseArray[j] = tmp;
         }
-        System.out.println(Arrays.toString(reverseArray));
+
+        for(int i=unevenArray.length, j=0; i < resultArray.length; i++, j++) {
+            resultArray[i] = reverseArray[j];
+        }
+
+        System.out.println(Arrays.toString(resultArray));
     }
 
     public static int[] unevenArray() {
