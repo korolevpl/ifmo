@@ -18,9 +18,19 @@ public class LuckyTickets {
     public static int luckyTickets() {
         // Можно также разделить число попалам (number / 1000 и number % 1000 ), и,
         // сравнить сумму разрядов этих 2 числел.
-        int number = 123456;
+        int number = 999999;
         int count = 0;
-
+        while (number != 0) {
+            int left = number / 1000;
+            int right = number % 1000;
+            int amount1 = DigitsSum.digitSum(left);
+            int amount2 = DigitsSum.digitSum(right);
+            if (amount1 == amount2) {
+                count++;
+            }
+            number--;
+        }
+        /*
         while (number != 0) {
             int position0 = number % 10;
             int position1 = (number / 10) % 10;
@@ -33,6 +43,7 @@ public class LuckyTickets {
             }
             number--;
         }
+        */
         return count;
     }
 }
