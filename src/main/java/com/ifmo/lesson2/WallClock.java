@@ -43,11 +43,11 @@ public class WallClock {
         Random random = new Random();
         return random.nextInt(28800);
     }
-
+    // seconds = 28800 ==> expected: <Осталось 8 часов> but was: <Осталось менее часа>]
     public static String remainingHours(int rndSecond) {
         int hour = (rndSecond/60)/60;
         String result = switch (hour) {
-            case 7, 6, 5 -> "Осталось " + hour + " часов";
+            case 8, 7, 6, 5 -> "Осталось " + hour + " часов";
             case 4, 3, 2 -> "Осталось " + hour + " часа";
             case 1 -> "Остался " + hour + " час";
             default -> "Осталось менее часа";
