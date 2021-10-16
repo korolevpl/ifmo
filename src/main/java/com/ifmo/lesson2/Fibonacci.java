@@ -8,7 +8,7 @@ public class Fibonacci {
      */
     public static void main(String[] args) {
         int[] array = new int[11];
-        array[0] = 0;
+        array[0] = 1;
         array[1] = 1;
         int i;
         for (i=2; i<array.length; i++) {
