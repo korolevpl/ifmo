@@ -12,6 +12,8 @@ public class PrimeNumber {
 
     1 не считается простым числом.
      */
+
+    // n = 1 ==> expected: <false> but was: <true>]
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
@@ -25,10 +27,14 @@ public class PrimeNumber {
     public static boolean isPrime(int n) {
         int i;
         boolean result = true;
-        for (i=2; i<n; i++) {
-            if (n % i == 0) {
-                result = false;
-                break;
+        if (n <= 1) {
+            result = false;
+        } else {
+            for (i=2; i<n; i++) {
+                if (n % i == 0) {
+                    result = false;
+                    break;
+                }
             }
         }
         return result;
