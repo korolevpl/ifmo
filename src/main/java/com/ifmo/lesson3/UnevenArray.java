@@ -2,7 +2,7 @@ package com.ifmo.lesson3;
 
 import java.util.Arrays;
 
-public class UnevenArray<unevenArray> {
+public class UnevenArray {
     /*
     Создайте массив из всех нечётных чисел от 1 до 99, выведите его на экран в строку, а затем
     этот же массив выведите на экран тоже в строку, но в обратном порядке (99 97 95 93 … 7 5 3
@@ -11,10 +11,11 @@ public class UnevenArray<unevenArray> {
     public static void main(String[] args) {
         int[] unevenArray = unevenArray();
 
-        // Можно также использовать System.arraycopy() или метод clone()
+        // Можно также использовать System.arraycopy()
 
         int[] resultArray = Arrays.copyOf(unevenArray,unevenArray.length * 2);
         /*
+        // Этот цикл вместо Arrays.copyOf()
         for(int i=0; i < unevenArray.length; i++) {
             resultArray[i] = unevenArray[i];
         }
@@ -26,6 +27,7 @@ public class UnevenArray<unevenArray> {
             reverseArray[j] = tmp;
         }
         /*
+        // Этот цикл не работает...
         for (int i=0; i<reverseArray.length; i++) {
             Arrays.fill(resultArray, 50, resultArray.length, reverseArray[i]);
         }
@@ -33,7 +35,10 @@ public class UnevenArray<unevenArray> {
         for(int i=unevenArray.length, j=0; i < resultArray.length; i++, j++) {
             resultArray[i] = reverseArray[j];
         }
-        System.out.println(Arrays.toString(resultArray));
+
+        for (int value : resultArray) {
+            System.out.print(value + " ");
+        }
     }
 
     public static int[] unevenArray() {
