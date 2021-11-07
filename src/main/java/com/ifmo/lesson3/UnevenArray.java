@@ -11,9 +11,12 @@ public class UnevenArray {
     public static void main(String[] args) {
         int[] unevenArray = unevenArray();
 
+        for (int value : unevenArray) {
+            System.out.print(value + " ");
+        }
         // Можно также использовать System.arraycopy()
 
-        int[] resultArray = Arrays.copyOf(unevenArray,unevenArray.length * 2);
+//        int[] resultArray = Arrays.copyOf(unevenArray,unevenArray.length * 2);
         /*
         // Этот цикл вместо Arrays.copyOf()
         for(int i=0; i < unevenArray.length; i++) {
@@ -32,11 +35,15 @@ public class UnevenArray {
             Arrays.fill(resultArray, 50, resultArray.length, reverseArray[i]);
         }
         */
-        for(int i=unevenArray.length, j=0; i < resultArray.length; i++, j++) {
-            resultArray[i] = reverseArray[j];
-        }
+//        for(int i=unevenArray.length, j=0; i < resultArray.length; i++, j++) {
+//            resultArray[i] = reverseArray[j];
+//        }
 
-        for (int value : resultArray) {
+//        for (int value : resultArray) {
+//            System.out.print(value + " ");
+//        }
+
+        for (int value : reverseArray) {
             System.out.print(value + " ");
         }
     }
