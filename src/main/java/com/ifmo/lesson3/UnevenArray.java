@@ -50,7 +50,6 @@ public class UnevenArray {
                 j++;
             }
         }
-
         return array;
     }
 }
