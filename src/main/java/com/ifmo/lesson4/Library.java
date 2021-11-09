@@ -81,13 +81,13 @@ public class Library {
             if (shelf.getBook().equals(book)) {
                 if (shelf.getQuantity() <= quantity) {
                     count = shelf.getQuantity();
-                    shelves[i] = null;
-                    break;
+                    // shelves[i] = null;
+                    shelf.setQuantity(0);
                 } else {
                     count = quantity;
                     shelf.setQuantity(shelf.getQuantity() - quantity);
-                    break;
                 }
+                break;
             }
         }
         return count;
