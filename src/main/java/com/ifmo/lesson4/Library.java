@@ -61,6 +61,8 @@ public class Library {
             } else if (shelf.getBook().equals(book)) {
                 shelf.setQuantity(shelf.getQuantity() + quantity);
                 return true;
+            } else {
+                continue;
             }
         }
         return false;
@@ -94,16 +96,16 @@ public class Library {
     }
 
     public static void main(String[] args) {
-        Library library = new Library(10);
+        Library library = new Library(2);
         Book wp = new Book("Tolstoy", "War and peace");
         boolean wpAdded = library.put (wp, 2);
         System.out.println(wpAdded);
-        Book wp2 = new Book("Tolstoy", "War and peace");
-        boolean wp2Added = library.put (wp2, 3);
+        Book wp2 = new Book("Tolstoy", "War and peace2");
+        boolean wp2Added = library.put (wp2, 2);
         System.out.println(wp2Added);
 
         Book wp3 = new Book("Tolstoy", "War and peace");
-        int wpTook = library.take(wp3, 5);
+        int wpTook = library.take(wp3, 3);
         System.out.println(wpTook);
 
         System.out.println();
