@@ -14,34 +14,15 @@ public class UnevenArray {
         for (int value : unevenArray) {
             System.out.print(value + " ");
         }
-        // Можно также использовать System.arraycopy()
 
-//        int[] resultArray = Arrays.copyOf(unevenArray,unevenArray.length * 2);
-        /*
-        // Этот цикл вместо Arrays.copyOf()
-        for(int i=0; i < unevenArray.length; i++) {
-            resultArray[i] = unevenArray[i];
-        }
-        */
         int[] reverseArray = unevenArray;
         for (int i=0, j = reverseArray.length -1; i<=j; i++, j--) {
             int tmp = reverseArray[i];
             reverseArray[i] = reverseArray[j];
             reverseArray[j] = tmp;
         }
-        /*
-        // Этот цикл не работает...
-        for (int i=0; i<reverseArray.length; i++) {
-            Arrays.fill(resultArray, 50, resultArray.length, reverseArray[i]);
-        }
-        */
-//        for(int i=unevenArray.length, j=0; i < resultArray.length; i++, j++) {
-//            resultArray[i] = reverseArray[j];
-//        }
 
-//        for (int value : resultArray) {
-//            System.out.print(value + " ");
-//        }
+        System.out.println();
 
         for (int value : reverseArray) {
             System.out.print(value + " ");
