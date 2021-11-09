@@ -75,18 +75,22 @@ public class Library {
      * @return Actual number of books taken.
      */
     public int take(Book book, int quantity) {
-        Shelf shelf = null;
+        int count = 0;
         for (int i=0; i<shelves.length; i++) {
-            shelf = shelves[i];
+            Shelf shelf = shelves[i];
             if (shelf.getBook().equals(book)) {
-                if (shelf.getQuantity() < quantity) {
-                    shelf.setQuantity(0);
+                if (shelf.getQuantity() <= quantity) {
+                    count = shelf.getQuantity();
+                    shelves[i] = null;
+                    break;
                 } else {
+                    count = quantity;
                     shelf.setQuantity(shelf.getQuantity() - quantity);
+                    break;
                 }
             }
         }
-        return shelf.getQuantity();
+        return count;
     }
 
     public static void main(String[] args) {
@@ -97,8 +101,18 @@ public class Library {
         Book wp2 = new Book("Tolstoy", "War and peace");
         boolean wp2Added = library.put (wp2, 3);
         System.out.println(wp2Added);
+
         Book wp3 = new Book("Tolstoy", "War and peace");
-        int wpTook = library.take(wp3, 1);
+        int wpTook = library.take(wp3, 5);
         System.out.println(wpTook);
+
+        System.out.println();
+
+        for(int i=0; i<library.shelves.length; i++) {
+            if(library.shelves[i] != null) {
+                System.out.println(library.shelves[i].getBook());
+                System.out.println(library.shelves[i].getQuantity());
+            }
+        }
     }
 }
