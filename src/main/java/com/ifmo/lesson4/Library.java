@@ -75,15 +75,18 @@ public class Library {
      * @return Actual number of books taken.
      */
     public int take(Book book, int quantity) {
-
+        Shelf shelf = null;
         for (int i=0; i<shelves.length; i++) {
-            Shelf shelf = shelves[i];
+            shelf = shelves[i];
             if (shelf.getBook().equals(book)) {
-                shelf.setQuantity(shelf.getQuantity() - quantity);
-                return shelf.getQuantity();
+                if (shelf.getQuantity() < quantity) {
+                    shelf.setQuantity(0);
+                } else {
+                    shelf.setQuantity(shelf.getQuantity() - quantity);
+                }
             }
         }
-        return 0;
+        return shelf.getQuantity();
     }
 
     public static void main(String[] args) {
