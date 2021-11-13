@@ -61,8 +61,6 @@ public class Library {
             } else if (shelf.getBook().equals(book)) {
                 shelf.setQuantity(shelf.getQuantity() + quantity);
                 return true;
-            } else {
-                continue;
             }
         }
         return false;
@@ -78,13 +76,14 @@ public class Library {
      */
     public int take(Book book, int quantity) {
         int count = 0;
+
         for (int i=0; i<shelves.length; i++) {
             Shelf shelf = shelves[i];
             if (shelf.getBook().equals(book)) {
                 if (shelf.getQuantity() <= quantity) {
                     count = shelf.getQuantity();
-                    // shelves[i] = null;
-                    shelf.setQuantity(0);
+                    System.arraycopy(shelves, i+1, shelves, i, shelves.length - (i+1));
+                    shelves[shelves.length - 1] = null;
                 } else {
                     count = quantity;
                     shelf.setQuantity(shelf.getQuantity() - quantity);
@@ -96,24 +95,42 @@ public class Library {
     }
 
     public static void main(String[] args) {
-        Library library = new Library(2);
+        Library library = new Library(5);
+
         Book wp = new Book("Tolstoy", "War and peace");
         boolean wpAdded = library.put (wp, 2);
-        System.out.println(wpAdded);
+        System.out.println(wp.toString() + " added: " + wpAdded);
+
         Book wp2 = new Book("Tolstoy", "War and peace2");
         boolean wp2Added = library.put (wp2, 2);
-        System.out.println(wp2Added);
+        System.out.println(wp2.toString() + " added: " + wp2Added);
 
-        Book wp3 = new Book("Tolstoy", "War and peace");
+        Book wp4 = new Book("Tolstoy", "War and peace3");
+        boolean wp4Added = library.put (wp4, 2);
+        System.out.println(wp4.toString() + " added: " + wp4Added);
+
+        Book wp3 = new Book("Tolstoy", "War and peace2");
         int wpTook = library.take(wp3, 3);
-        System.out.println(wpTook);
+        System.out.println(wp3.toString() + " took: " + wpTook);
+
+        Book wp5 = new Book("Tolstoy", "War and peace3");
+        boolean wp5Added = library.put (wp5, 2);
+        System.out.println(wp5.toString() + " added: " + wp5Added);
+
+        Book wp6 = new Book("Tolstoy", "War and peace4");
+        boolean wp6Added = library.put (wp6, 2);
+        System.out.println(wp6.toString() + " added: " + wp6Added);
+
+        Book wp7 = new Book("Tolstoy", "War and peace5");
+        boolean wp7Added = library.put (wp7, 2);
+        System.out.println(wp7.toString() + " added: " + wp7Added);
 
         System.out.println();
 
         for(int i=0; i<library.shelves.length; i++) {
+            System.out.println(library.shelves[i]);
             if(library.shelves[i] != null) {
-                System.out.println(library.shelves[i].getBook());
-                System.out.println(library.shelves[i].getQuantity());
+                System.out.println(library.shelves[i].getBook() + " " + library.shelves[i].getQuantity());
             }
         }
     }
