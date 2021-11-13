@@ -15,7 +15,7 @@ import java.util.Iterator;
  * |0|1|3|4|5|_|
  * Теперь при итерации по ним после 1 будет идти сразу 3, как в связном списке.
  */
-public class ArrayList implements List {
+public class ArrayList<T> implements List<T> {
     private static final int DEFAULT_SIZE = 10;
     private int itemCount;
     private Object[] values;
@@ -39,20 +39,20 @@ public class ArrayList implements List {
 
     /** {@inheritDoc} */
     @Override
-    public void add(Object val) {
-        Object item = new Item(val);
+    public void add(T val) {
+        // T item = (T) new Object();
         int len = values.length;
         if (values[0] == null) {
-            values[0] = item;
+            values[0] = val;
         } else if (values[len-1] != null) {
             Object[] temp = new Object[values.length * 2];
             System.arraycopy(values, 0, temp, 0, values.length);
             values = temp;
-            values[len] = item;
+            values[len] = val;
         } else {
             for (int i = 1; i < len; i++) {
                 if (values[i] == null) {
-                    values[i] = item;
+                    values[i] = val;
                     break;
                 }
             }
@@ -62,21 +62,21 @@ public class ArrayList implements List {
 
     /** {@inheritDoc} */
     @Override
-    public Object get(int i) {
+    public T get(int i) {
         if(i >= itemCount) {
             return null;
         } else {
-            return values[i];
+            return (T) values[i];
         }
     }
 
     /** {@inheritDoc} */
     @Override
-    public Object remove(int i) {
+    public T remove(int i) {
         if(i >= itemCount) {
             return null;
         } else {
-            Object item = values[i];
+            T item = (T) values[i];
             System.arraycopy(values, i+1, values, i, values.length - (i+1));
             itemCount--;
             return item;
@@ -85,8 +85,8 @@ public class ArrayList implements List {
 
     /** {@inheritDoc} */
     @Override
-    public Iterator iterator() {
-        Iterator iterator = new Iterator() {
+    public Iterator<T> iterator() {
+        Iterator<T> iterator = new Iterator<T>() {
             int index = 0;
             @Override
             public boolean hasNext() {
@@ -94,9 +94,9 @@ public class ArrayList implements List {
             }
 
             @Override
-            public Object next() {
+            public T next() {
                 if(hasNext()) {
-                    return values[index++];
+                    return (T) values[index++];
                 }
                 return null;
             }

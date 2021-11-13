@@ -71,14 +71,14 @@ public class Main {
         for (int i=1; i<=10; i++) {
             arrayList.add(i);
         }
-        for (Object val : arrayList) {
+        for (Integer val : arrayList) {
             System.out.println(val);
         }
 
         arrayList.add(11);
         System.out.println();
 
-        for (Object val : arrayList) {
+        for (Integer val : arrayList) {
             System.out.println(val);
         }
         System.out.println();
@@ -89,7 +89,7 @@ public class Main {
         System.out.println(arrayList.remove(5));
         System.out.println();
 
-        for (Object val : arrayList) {
+        for (Integer val : arrayList) {
             System.out.println(val);
         }
     }
