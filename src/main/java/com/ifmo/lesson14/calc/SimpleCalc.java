@@ -1,5 +1,6 @@
 package com.ifmo.lesson14.calc;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -20,7 +21,6 @@ import java.util.Scanner;
  * если имя переменной не найдено или использовался неверный синтаксис.
  */
 public class SimpleCalc {
-    // создать перменную, которая является картой с оператором new.
     static HashMap<String, Integer> variables = new HashMap<>();
 
     public static void main(String[] args) {
@@ -82,33 +82,24 @@ public class SimpleCalc {
 
         OPERATOR operator = OPERATOR.parse(operands[1]); // operator = ASSIGNMENT
 
-        int op1 = 0;
-        int op2 = 0;
-        if (isNumber(operands[0])) { // NUMBER
-            op1 = parseOperand(operands[0]);
-            op2 = parseOperand(operands[2]);
-        } else { // NOT NUMBER
+        if(!isNumber(operands[0])) {
             if (operator == OPERATOR.ASSIGNMENT) {
-                variables.put(operands[0], parseOperand(operands[2]));
-                return parseOperand(operands[2]);
-            } else {
-                if (variables.containsKey(operands[0])) {
-                    op1 = variables.get(operands[0]);
-                    op2 = parseOperand(operands[2]);
-                } else {
-                    throw new CalcException("Variable is not found: " + line);
+                try {
+                    variables.put(operands[0], parseOperand(operands[2]));
+                    return parseOperand(operands[2]);
+                } catch (CalcException e) {
+                    System.out.println("Variable not found.");
                 }
             }
         }
+        int op1 = parseOperand(operands[0]);
+        int op2 = parseOperand(operands[2]);
         return operator.apply(op1, op2);
     }
-//        throw new CalcException("Invalid expression: " + line);
-//        int op1 = parseOperand(operands[0]);
-//        int op2 = parseOperand(operands[2]);
-
 
     private static int parseOperand(String string) throws CalcException {
-        // если символ, тогда достать значение по ключу из мапы.
+        if (variables.containsKey(string))
+            return variables.get(string);
         try {
             return Integer.parseInt(string);
         }
