@@ -42,22 +42,22 @@ import java.util.LinkedList;
  * </pre>
  */
 public class Library {
-    // при создании объекта Library создается словарь buckets
-    LinkedList<Shelf> buckets;
+    Shelf[] buckets;
     int capacityBuckets; // вместимость словаря (количество элементов)
     int countBuckets; // фактическое количество элементов словаря
 
     public Library(int maxBookKinds) {
-        buckets = new LinkedList<>();
         capacityBuckets = maxBookKinds;
+        buckets = new Shelf[capacityBuckets];
         countBuckets = 0;
 
         for(int i=0; i<capacityBuckets; i++) {
-            buckets.add(null);
+            buckets[i] = null;
         }
     }
 
     int getIndex(Book book) {
+        // int hash = Math.abs(book.hashCode());
         int hash = book.hashCode();
         int index = hash % capacityBuckets;
         return index;
@@ -72,29 +72,29 @@ public class Library {
      */
     public boolean put(Book book, int quantity) {
         int index = getIndex(book);
+        System.out.println("index of buckets = " + index);
 
-        Shelf current = buckets.get(index);
-
-        System.out.println("index = " + index);
-
-        Shelf item = new Shelf(book, quantity);
+        Shelf current = buckets[index];
         if (current == null) {
-            buckets.add(index, item);
+            buckets[index] = new Shelf(book, quantity);
             countBuckets++;
             return true;
         }
-
         while(current != null) {
             if (current.getBook().equals(book)) {
                 current.setQuantity(current.getQuantity() + quantity);
                 break;
-            }
-            if (current.next == null) {
-                current.next = item;
-                break;
             } else {
-                // Когда книга отличается от искомой, переходим к следующему элементу в словаре
-                current = current.next;
+                if (current.next != null) {
+                    current = current.next;
+                    continue;
+                }
+                if (current.next == null) {
+                    Shelf item = new Shelf(book, quantity);
+                    current.next = item;
+                    countBuckets++;
+                    break;
+                }
             }
         }
         return true;
@@ -110,75 +110,57 @@ public class Library {
     public int take(Book book, int quantity) {
         int count = 0;
         int index = getIndex(book);
-
         System.out.println("index = " + index);
 
-        Shelf current = buckets.get(index);
+        Shelf current = buckets[index];
 
         if (current == null) {
             return count;
         }
 
         while(current != null) {
-            if (current.getBook().equals(book)) {
-                if (current.getQuantity() <= quantity) {
-                    count = current.getQuantity();
-                    current = null;
+            if (current.getBook().equals(book)) { // Нашли книгу
+                if (current.getQuantity() <= quantity) { // Количество книг на полке меньше, чем хотим изъять
+                    count = current.getQuantity(); // сохраняем количество книг на полке, чтобы вернуть в консоль по условию задачи
+                    if (current.next != null) {
+                        buckets[index] = current.next;
+                    } else {
+                        buckets[index] = null;
+                    }
+                    countBuckets--;
+                    break;
                 } else {
                     current.setQuantity(current.getQuantity() - quantity);
                     count = quantity;
                 }
-                break;
             }
+            current = current.next;
         }
         return count;
     }
 
     public static void main(String[] args) {
-        /*
-        Library library = new Library(5);
-
-        Book wp = new Book("Tolstoy", "War and peace");
-        boolean wpAdded = library.put(wp, 2);
-        System.out.println(wp.toString() + " added: " + wpAdded);
-
-        Book wp2 = new Book("Tolstoy", "War and peace");
-        boolean wpAdded2 = library.put(wp2, 5);
-        System.out.println(wp2.toString() + " added: " + wpAdded2);
-
-        System.out.println();
-        System.out.println(library.capacityBuckets);
-        System.out.println(library.countBuckets);
-        System.out.println();
-        for(int i=0; i < library.capacityBuckets; i++) {
-            if (library.buckets.get(i) != null) {
-                System.out.println("index = " + i);
-                System.out.println(library.buckets.get(i).getBook());
-                System.out.println(library.buckets.get(i).getQuantity());
-            }
-        }
-        */
         Library library = new Library(2);
 
-        System.out.println("put: " + library.put(new Book("Stephen King", "Shining"), 2)); // return true
+        System.out.println("put: " + library.put(new Book("Stephen King", "Shining"), 2));
         System.out.println();
-        System.out.println("put: " + library.put(new Book("Stephen King", "Dark Tower"), 3)); // return true
+        System.out.println("put: " + library.put(new Book("Stephen King", "Dark Tower"), 3));
         System.out.println();
-        System.out.println("put: " + library.put(new Book("Tolstoy", "War and peace"), 6)); // return false
+        System.out.println("put: " + library.put(new Book("Tolstoy", "War and peace"), 6));
         System.out.println();
-        System.out.println("took: " + library.take(new Book("Stephen King", "Dark Tower"), 3)); // return 3
+        System.out.println("took: " + library.take(new Book("Stephen King", "Dark Tower"), 3));
         System.out.println();
-        System.out.println("put: " + library.put(new Book("Tolstoy", "War and peace"), 6)); // return true
+        System.out.println("put: " + library.put(new Book("Tolstoy", "War and peace"), 6));
         System.out.println();
-        System.out.println("put: " + library.put(new Book("Stephen King", "Shining"), 2)); // return true
+        System.out.println("put: " + library.put(new Book("Stephen King", "Shining"), 2));
         System.out.println();
-        System.out.println("took: " + library.take(new Book("Stephen King", "Shining"), 10)); // return 2
+        System.out.println("took: " + library.take(new Book("Stephen King", "Shining"), 10));
         System.out.println();
         for(int i=0; i < library.capacityBuckets; i++) {
-            if (library.buckets.get(i) != null) {
+            if (library.buckets[i] != null) {
                 System.out.println("index = " + i);
-                System.out.println(library.buckets.get(i).getBook());
-                System.out.println(library.buckets.get(i).getQuantity());
+                System.out.println(library.buckets[i].getBook());
+                System.out.println(library.buckets[i].getQuantity());
             }
         }
     }
